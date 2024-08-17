@@ -1,167 +1,125 @@
 import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JFrame;
 import javax.swing.*;
-import java.awt.*;
 
 /**
- * This class acts as the controller of the ice cream application it extends
- * JPanel and implements Action Listener
+ * This class acts as the controller of the ice cream application. It extends
+ * JPanel and implements ActionListener.
  * 
  * @author Nada-Al-Thawr
  *
  */
 public class IceCreamMaker extends JPanel implements ActionListener {
-	/**
-	 * @param cone
-	 *            , which is an instant of the ice cream cone class
-	 * @param vanButton
-	 *            , JButton
-	 * @param chocolateButton
-	 *            , JButton
-	 * @param strawButton
-	 *            , JButton
-	 * @param teaButton
-	 *            , JButton
-	 * @param trashButton
-	 *            , JButton
-	 * @param randomButton
-	 *            , JButton
-	 */
-	IceCreamCone cone = new IceCreamCone();
-	JButton vanButton;
-	JButton chocolateButton;
-	JButton strawButton;
-	JButton teaButton;
-	JButton trashButton;
-	JButton randomButton;
+    // Ice cream cone instance
+    private IceCreamCone cone = new IceCreamCone();
 
-	/**
-	 * constructor
-	 */
-	public IceCreamMaker() {
-		// call super
-		super(new BorderLayout());
-		// create a new icecreamcone
-		
-		// call make button
-		makeButton();
-		// add make button to the north of the border layout
-		add(makeButton(), BorderLayout.NORTH);
-		// add the cone to the center of the border layout
-		add(cone, BorderLayout.CENTER);
+    // Buttons for flavors and actions
+    private JButton vanButton;
+    private JButton chocolateButton;
+    private JButton strawButton;
+    private JButton teaButton;
+    private JButton trashButton;
+    private JButton randomButton;
 
-	}
+    /**
+     * Constructor to set up the UI components
+     */
+    public IceCreamMaker() {
+        super(new BorderLayout());
+        setupUI();
+    }
 
-	/**
-	 * makeButton, makes all the buttons
-	 * 
-	 * @return JPanel
-	 */
+    /**
+     * Set up the UI components
+     */
+    private void setupUI() {
+        // Create and add buttons panel to the north
+        add(createButtonPanel(), BorderLayout.NORTH);
+        // Add the ice cream cone component to the center
+        add(cone, BorderLayout.CENTER);
+    }
 
-	public JPanel makeButton() {
-		// two new grid layouts for the flavor buttons and the trash button
-		GridLayout buttonGrid = new GridLayout(1, 5);
-		GridLayout trashGrid = new GridLayout(1, 1);
-		// create three panels for both the grids
-		// and the main panel they're both added to
-		JPanel myPanel = new JPanel(buttonGrid);
-		JPanel trashPanel = new JPanel(trashGrid);
-		JPanel thePanel = new JPanel(new BorderLayout());
-		// add the grid panels to the main panel
-		thePanel.add(myPanel, BorderLayout.NORTH);
-		thePanel.add(trashPanel, BorderLayout.SOUTH);
-		// create the trash button, set the color and show it
-		trashButton = new JButton("Eat the heart out of your scoop!");
-		trashButton.setBackground(Color.cyan);
-		trashButton.setOpaque(true);
+    /**
+     * Create a panel with buttons for adding flavors and actions
+     * 
+     * @return JPanel with buttons
+     */
+    private JPanel createButtonPanel() {
+        JPanel buttonPanel = new JPanel(new GridLayout(1, 5));
+        JPanel trashPanel = new JPanel(new GridLayout(1, 1));
+        JPanel mainPanel = new JPanel(new BorderLayout());
 
-		// create the vanilla button, set the color and show it
-		vanButton = new JButton("vanilla");
-		vanButton.setBackground(Color.white);
-		vanButton.setOpaque(true);
+        // Create and add flavor buttons
+        vanButton = createButton("Vanilla", Color.white);
+        teaButton = createButton("Green Tea", Color.green);
+        strawButton = createButton("Strawberry", Color.pink);
+        chocolateButton = createButton("Chocolate", Color.orange);
+        randomButton = createButton("Random", Color.yellow);
 
-		// create the tea button, set the color and show it
-		teaButton = new JButton("Green Tea");
-		teaButton.setBackground(Color.green);
-		teaButton.setOpaque(true);
+        // Create and add trash button
+        trashButton = createButton("Eat the heart out of your scoop!", Color.cyan);
 
-		// create the strawberry button, set the color and show it
-		strawButton = new JButton("strawberry");
-		strawButton.setBackground(Color.pink);
-		strawButton.setOpaque(true);
+        // Add buttons to the button panel
+        buttonPanel.add(vanButton);
+        buttonPanel.add(teaButton);
+        buttonPanel.add(strawButton);
+        buttonPanel.add(chocolateButton);
+        buttonPanel.add(randomButton);
+        
+        // Add trash button to the trash panel
+        trashPanel.add(trashButton);
 
-		// create the chocolate button, set the color and show it
-		chocolateButton = new JButton("chocolate");
-		chocolateButton.setBackground(Color.orange);
-		chocolateButton.setOpaque(true);
+        // Add button panels to the main panel
+        mainPanel.add(buttonPanel, BorderLayout.NORTH);
+        mainPanel.add(trashPanel, BorderLayout.SOUTH);
 
-		// create the random button, set the color and show it
-		randomButton = new JButton("Random");
-		randomButton.setBackground(Color.YELLOW);
-		randomButton.setOpaque(true);
+        return mainPanel;
+    }
 
-		myPanel.add(vanButton);
-		myPanel.add(teaButton);
-		myPanel.add(strawButton);
-		myPanel.add(chocolateButton);
-		myPanel.add(randomButton);
-		trashPanel.add(trashButton);
+    /**
+     * Create a JButton with specified text and background color
+     * 
+     * @param text  the text of the button
+     * @param color the background color of the button
+     * @return configured JButton
+     */
+    private JButton createButton(String text, Color color) {
+        JButton button = new JButton(text);
+        button.setBackground(color);
+        button.setOpaque(true);
+        button.addActionListener(this);
+        return button;
+    }
 
-		// implement action listener for the buttons
-		vanButton.addActionListener(this);
-		strawButton.addActionListener(this);
-		teaButton.addActionListener(this);
-		chocolateButton.addActionListener(this);
-		trashButton.addActionListener(this);
-		randomButton.addActionListener(this);
-
-		// return the main panel
-		return thePanel;
-
-	}
-
-	/*
-	 * To make the buttons do what they are supposed to Call the addFlavor
-	 * method for each
-	 */
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == vanButton) {
-			// the vanilla button adds vanilla flavor
-			cone.addFlavor("vanilla");
-		}
-
-		if (e.getSource() == chocolateButton) {
-			// the chocolate button adds chocolate flavor
-			cone.addFlavor("chocolate");
-		}
-
-		if (e.getSource() == teaButton) {
-			// the tea button adds tea flavor
-			cone.addFlavor("tea");
-		}
-
-		if (e.getSource() == strawButton) {
-			// the strawbutton adds strawberry flavor
-			cone.addFlavor("strawberry");
-		}
-
-		if (e.getSource() == trashButton) {
-			// the trash button deletes the scoop
-			cone.deleteScoop();
-
-		}
-		if (e.getSource() == randomButton) {
-			// the random button adds random scoops
-			cone.addRandomScoop();
-
-		}
-
-	}
+    /**
+     * Handle button actions to add flavors or perform actions
+     */
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Object source = e.getSource();
+        if (source == vanButton) {
+            cone.addFlavor("vanilla");
+        } else if (source == chocolateButton) {
+            cone.addFlavor("chocolate");
+        } else if (source == teaButton) {
+            cone.addFlavor("tea");
+        } else if (source == strawButton) {
+            cone.addFlavor("strawberry");
+        } else if (source == trashButton) {
+            cone.deleteScoop();
+        } else if (source == randomButton) {
+            cone.addRandomScoop();
+        }
+    }
 }
+
+/* Método setupUI: Se creó un método para configurar los componentes de la interfaz de usuario.
+Método createButtonPanel: Se creó un método para crear y configurar el panel de botones.
+Método createButton: Se creó un método auxiliar para configurar cada botón.
+Uso de Object source en lugar de múltiples if: Simplificación de la comparación de la fuente del evento en el método actionPerformed. */

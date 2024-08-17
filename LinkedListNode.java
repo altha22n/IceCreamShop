@@ -1,42 +1,60 @@
 /**
- * This is a class to initialize a linked list node With all the methods used
+ * This is a class to initialize a linked list node with all the methods used.
  * 
- * @author Nada Al-Thawr
- * @param <T>
+ * @param <T> the type of elements held in this node
  */
 public class LinkedListNode<T> {
 
-	private T data;
-	private LinkedListNode<T> next;
+    private T data;
+    private LinkedListNode<T> next;
 
-	public LinkedListNode(T data) {
-		this.data = data;
-	}
+    public LinkedListNode(T data) {
+        this.data = data;
+    }
 
-	// get the data stored at this node
-	public T getData() {
+    /**
+     * Get the data stored at this node.
+     *
+     * @return the data stored at this node
+     */
+    public T getData() {
+        return data;
+    }
 
-		return data;
-	}
+    /**
+     * Set the data stored at this node.
+     *
+     * @param data the data to be stored at this node
+     */
+    public void setData(T data) {
+        this.data = data;
+    }
 
-	// set the data stored at this node
-	public void setData(T data) {
-		this.data = data;
-	}
+    /**
+     * Get the next node.
+     *
+     * @return the next node
+     */
+    public LinkedListNode<T> getNext() {
+        return next;
+    }
 
-	// get (pointer to) next node
-	public LinkedListNode<T> getNext() {
-		return next;
-	}
+    /**
+     * Set the next pointer to the passed node.
+     *
+     * @param next the node to be set as the next node
+     */
+    public void setNext(LinkedListNode<T> next) {
+        this.next = next;
+    }
 
-	// set the next pointer to the passed node
-	public void setNext(LinkedListNode<T> node) {
-		this.next = node;
-	}
-
-	// returns a string representation of this node
-	public String toString() {
-		return data.toString();
-	}
-
+    /**
+     * Returns a string representation of this node.
+     *
+     * @return a string representation of this node
+     */
+    @Override
+    public String toString() {
+        return (data != null) ? data.toString() : "null";
+    }
 }

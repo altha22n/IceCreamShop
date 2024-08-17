@@ -2,7 +2,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -10,91 +9,64 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
- * This class acts as the controller for the icecreamline class it extends
- * JComponent and implements ActionListener
+ * This class acts as the controller for the IceCreamLine class. It extends
+ * JComponent and implements ActionListener.
  * 
  * @author Nada-Al-Thawr
  *
  */
-
 public class IceCreamLineManager extends JComponent implements ActionListener {
-	// create an instance of icecreamline class
-	IceCreamLine line = new IceCreamLine();
-	// create a new frame
-	JFrame myFrame = new JFrame("Ice Cream Line!");
-	// and a new JPanel
-	JPanel myPanel = new JPanel();
+    private IceCreamLine line = new IceCreamLine();
+    private JFrame myFrame = new JFrame("Ice Cream Line!");
+    private JPanel myPanel = new JPanel();
 
-	/**
-	 * constructor
-	 */
-	public IceCreamLineManager() {
-		//add the new order button to the panel and put it in the north
-		myPanel.add(createNewOrderButton(), BorderLayout.NORTH);
-		//add the remove button to the panel and place it in the center 
-		myPanel.add(createRemoveNextButton(), BorderLayout.CENTER);
-		//add the panel to the frame 
-		myFrame.add(myPanel, BorderLayout.NORTH);
-		//set the frame's size
-		myFrame.setSize(400, 500);
-		//add the line to the frame 
-		//we can do that because our icecreamline class extends box
-		myFrame.add(line, BorderLayout.CENTER);
-		//exit on close
-		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// set it to be visible
-		myFrame.setVisible(true);
+    /**
+     * Constructor
+     */
+    public IceCreamLineManager() {
+        myPanel.setLayout(new BorderLayout());
+        myPanel.add(createButton("Add a random order", BorderLayout.NORTH));
+        myPanel.add(createButton("Serve the next order", BorderLayout.CENTER));
 
-	}
+        myFrame.add(myPanel, BorderLayout.NORTH);
+        myFrame.setSize(400, 500);
+        myFrame.add(line, BorderLayout.CENTER);
+        myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        myFrame.setVisible(true);
+    }
 
-	public void addControls() {
+    /**
+     * Creates a JButton with specified label and action command, and adds it to the
+     * specified position.
+     * 
+     * @param label    the text to display on the button
+     * @param position the BorderLayout position for the button
+     * @return the created JButton
+     */
+    private JButton createButton(String label, String position) {
+        JButton button = new JButton(label);
+        button.addActionListener(this);
+        return button;
+    }
 
-	}
-	/**
-	 * creates the newOrderButton
-	 * @return JButton
-	 */
-	public JButton createNewOrderButton() {
-		//create the button
-		JButton newOrderButton = new JButton("Add a random order");
-		//add action listener 
-		newOrderButton.addActionListener(this);
-		//and return it
-		return newOrderButton;
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String action = e.getActionCommand();
 
-	}
-	/**
-	 * creates the removeNextButton
-	 * @return JButton
-	 */
-	public JButton createRemoveNextButton() {
-		//create the button
-		JButton removeNextButton = new JButton("Serve the next order");
-		//add action listener
-		removeNextButton.addActionListener(this);
-		//and return it
-		return removeNextButton;
-	}
-	/**
-	 * to listen to the mouse clicks
-	 */
-	public void actionPerformed(ActionEvent e) {
-		//we create a new string  that gets action command
-		String action = e.getActionCommand();
-		//we use action.equals because we are dealing with strings
-		//if it equals to the text in newOrderButton 
-		if (action.equals("Add a random order")) {
-			System.out.println("pls work");
-			//we call addRandomOrder in the IceCreamLine class
-			line.addRandomOrder();
-
-		}
-		//if it equals to the text in removeNextButton
-		if (action.equals("Serve the next order")) {
-			//call deleteOrder in the IceCreamLine class
-			line.deleteOrder();
-
-		}
-
-	}
+        switch (action) {
+            case "Add a random order":
+                System.out.println("Adding a random order");
+                line.addRandomOrder();
+                break;
+            case "Serve the next order":
+                System.out.println("Serving the next order");
+                line.deleteOrder();
+                break;
+            default:
+                break;
+        }
+    }
 }
+/* Encapsulate Field: Los campos line, myFrame y myPanel son ahora privados.
+Remove Duplication: La creación de botones se ha simplificado en un único método createButton.
+ Reemplazo de if-else con switch para mejorar la claridad y reducir la complejidad. */

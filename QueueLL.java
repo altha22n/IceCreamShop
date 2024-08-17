@@ -1,68 +1,63 @@
 public class QueueLL<T> implements Queue<T> {
 
-	private LinkedList<T> myData;
+    private LinkedList<T> myData;
 
-	public QueueLL() {
-		myData = new LinkedList<T>();
+    public QueueLL() {
+        myData = new LinkedList<T>();
+    }
 
-	}
+    /**
+     * Tests if the queue is empty.
+     * 
+     * @return true if the queue is empty
+     **/
+    @Override
+    public boolean isEmpty() {
+        return myData.isEmpty();
+    }
 
-	/**
-	 * Tests if the queue is empty.
-	 * 
-	 * @return true iff the queue is empty
-	 **/
-	public boolean isEmpty() {
-		// return the method is empty from linked list
-		return myData.isEmpty();
-	}
+    /**
+     * Gets the element at the front of the queue without removing it.
+     * 
+     * @return the element at the front of the queue
+     **/
+    @Override
+    public T peek() {
+        return myData.getFirst();
+    }
 
-	/**
-	 * Gets the element at the front of the queue without removing it.
-	 * 
-	 * @return the peeked data
-	 **/
-	public T peek() {
-		// only return the first element without removing it
-		return myData.getFirst();
-	}
+    /**
+     * Removes the front element of the queue and returns it.
+     * 
+     * @return the element removed from the front of the queue
+     **/
+    @Override
+    public T dequeue() {
+        T tempData = myData.getFirst();
+        myData.deleteFirst();
+        return tempData;
+    }
 
-	/**
-	 * Removes the front element of the queue and returns it.
-	 * 
-	 * @return the dequeued data
-	 **/
-	public T dequeue() {
-		//put my first data in a temp value 
-		T tempData = myData.getFirst();
-		//then delete it 
-		 myData.deleteFirst();
-		 //and then return it 
-		return tempData;
-		
-	}
+    /**
+     * Adds an element to the end of the queue.
+     * 
+     * @param data the element to be added to the queue
+     **/
+    @Override
+    public void enqueue(T data) {
+        myData.insertLast(data);
+    }
 
-	/**
-	 * Adds an element to the end of the queue.
-	 **/
-	public void enqueue(T data) {
-		if (!myData.isEmpty()){
-			myData.insertLast(data);
-		}
-		else {
-			myData.insertFirst(data);
-		}
-		
-
-	}
-
-	/**
-	 * Returns a String representation of the queue.
-	 * 
-	 * @return queue as String
-	 **/
-	public String toString() {
-		// calls the method toString from linked list
-		return myData.toString();
-	}
+    /**
+     * Returns a String representation of the queue.
+     * 
+     * @return a string representation of the queue
+     **/
+    @Override
+    public String toString() {
+        return myData.toString();
+    }
 }
+/*
+ Simplificación de la lógica: La lógica en el método enqueue se simplificó eliminando el if-else redundante, ya que el método insertLast ya maneja el caso de agregar un elemento al final de la lista, independientemente de si la lista está vacía o no.
+ */
